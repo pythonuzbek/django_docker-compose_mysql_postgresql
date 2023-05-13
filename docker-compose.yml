@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+#  db:
+#    restart: always
+#    image: postgres:alpine
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: 1
+#      POSTGRES_DB: mydb
+
+
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: my_database
+      MYSQL_ROOT_PASSWORD: n
+
+
+  web:
+    build: .
+    ports:
+      - "7000:8000"
+    depends_on:
+      - db
+    command: python3 manage.py runserver 0.0.0.0:8000
+    environment:
+      DB_HOST: db
+      DB_NAME: my_database
+      DB_USER: root
+      DB_PASSWORD: n
+
+
+
+
+
